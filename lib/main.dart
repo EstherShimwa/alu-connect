@@ -1,5 +1,5 @@
-import 'screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'screens/onboarding_screen.dart';
 
 void main() {
   runApp(const TheALUConnect());
@@ -32,11 +32,7 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Icon(
-              Icons.school,
-              size: 90,
-              color: Colors.white,
-            ),
+            Icon(Icons.school, size: 90, color: Colors.white),
             SizedBox(height: 20),
             Text(
               'The ALU Connect',
@@ -49,10 +45,7 @@ class SplashScreen extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               'Connecting ALU students to opportunities',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-              ),
+              style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
           ],
         ),
