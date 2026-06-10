@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/onboarding_screen.dart';
+import 'services/rsvp_service.dart';
 
 void main() {
   runApp(const TheALUConnect());
