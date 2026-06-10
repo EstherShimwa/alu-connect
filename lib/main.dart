@@ -1,7 +1,10 @@
 import 'screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'services/rsvp_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await RsvpService.instance.init();
   runApp(const TheALUConnect());
 }
 
