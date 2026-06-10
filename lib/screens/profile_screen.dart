@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/rsvp_service.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -60,10 +61,16 @@ class ProfileScreen extends StatelessWidget {
           ),
 
           Card(
-            child: ListTile(
-              leading: const Icon(Icons.event),
-              title: const Text("Events Joined"),
-              subtitle: const Text("3 Active Registrations"),
+            child: AnimatedBuilder(
+              animation: RsvpService.instance,
+              builder: (context, _) {
+                final count = RsvpService.instance.registrations.length;
+                return ListTile(
+                  leading: const Icon(Icons.event),
+                  title: const Text("Events Joined"),
+                  subtitle: Text("$count Active ${count == 1 ? 'Registration' : 'Registrations'}"),
+                );
+              },
             ),
           ),
 
