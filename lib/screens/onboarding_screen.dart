@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import 'signup_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -49,23 +50,32 @@ class OnboardingScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        const LoginScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
-
               style: ElevatedButton.styleFrom(
-                minimumSize: const Size(
-                  double.infinity,
-                  55,
-                ),
+                minimumSize: const Size(double.infinity, 55),
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
               ),
+              child: const Text('Login', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            ),
 
-              child: const Text(
-                'Get Started',
+            const SizedBox(height: 16),
+
+            OutlinedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignupScreen()),
+                );
+              },
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 55),
+                side: const BorderSide(color: Colors.deepPurple),
+                foregroundColor: Colors.deepPurple,
               ),
+              child: const Text('Create Account', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
           ],
         ),

@@ -231,16 +231,10 @@ class _RsvpRegistrationScreenState extends State<RsvpRegistrationScreen> {
                 if (value == null || value.trim().isEmpty) {
                   return 'Please enter your email';
                 }
-                final email = value.trim().toLowerCase();
                 if (!RegExp(
                   r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                ).hasMatch(email)) {
+                ).hasMatch(value.trim())) {
                   return 'Please enter a valid email address';
-                }
-                if (!email.endsWith('@alustudent.com') &&
-                    !email.endsWith('@alu.edu') &&
-                    !email.endsWith('@africanleadershipuniversity.com')) {
-                  return 'Please use your official ALU email address';
                 }
                 return null;
               },
