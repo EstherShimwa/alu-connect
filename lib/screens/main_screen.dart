@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'my_events_screen.dart';
+import 'chat_list_screen.dart';
 import 'profile_screen.dart';
-import 'rsvp_registration_screen.dart'; // To access mainTabNotifier
+import 'rsvp_registration_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    mainTabNotifier.value = 0; // Reset index to 0 at start
+    mainTabNotifier.value = 0;
     mainTabNotifier.addListener(_onTabNotification);
   }
 
@@ -39,10 +40,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      const HomeScreen(),      // Your feed (index 0)
-      const MyEventsScreen(),  // My Events (index 1)
-      // TODO: Person 4 - Chat/Community (index 2 in future)
-      const ProfileScreen(),   // Profile (index 2 currently)
+      const HomeScreen(),       // Home feed (index 0)
+      const MyEventsScreen(),   // My Events (index 1)
+      const ChatListScreen(),   // Chat/Community (index 2)
+      const ProfileScreen(),    // Profile (index 3)
     ];
 
     return Scaffold(
@@ -59,12 +60,24 @@ class _MainScreenState extends State<MainScreen> {
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: "My Events"),
-          // TODO: Person 4 - BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Community"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.event),
+            label: "My Events",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            label: "Community",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
         ],
       ),
     );
   }
-}
+}
