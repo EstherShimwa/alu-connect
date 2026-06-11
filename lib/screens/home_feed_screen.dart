@@ -1,7 +1,9 @@
-// lib/screens/home_feed_screen.dart
 import 'package:flutter/material.dart';
 import '../services/mock_data.dart';
+import '../services/post_service.dart';
+import '../services/auth_service.dart';
 import 'event_details_screen.dart';
+import 'post_opportunity_screen.dart';
 
 class HomeFeedScreen extends StatefulWidget {
   const HomeFeedScreen({super.key});
@@ -11,21 +13,37 @@ class HomeFeedScreen extends StatefulWidget {
 }
 
 class _HomeFeedScreenState extends State<HomeFeedScreen> {
-  // Mock data tailored to the ALU ecosystem
-  final List<Map<String, String>> _allOpportunities = mockOpportunities;
+  String _searchQuery = '';
+  String _selectedCategory = 'All';
+  final List<String> _categories = ['All', 'Clubs', 'Internships', 'Hackathons', 'Workshops'];
 
-  String _searchQuery = "";
-  String _selectedCategory = "All";
+  @override
+  void initState() {
+    super.initState();
+    PostService.instance.addListener(_refresh);
+  }
 
-  final List<String> _categories = ["All", "Clubs", "Internships", "Hackathons", "Workshops"];
+  @override
+  void dispose() {
+    PostService.instance.removeListener(_refresh);
+    super.dispose();
+  }
+
+  void _refresh() {
+    if (mounted) setState(() {});
+  }
+
+  List<Map<String, String>> get _allOpportunities {
+    final approved = PostService.instance.approvedPosts.map((p) => p.toFeedMap()).toList();
+    return [...mockOpportunities, ...approved];
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Filter logic based on category and search query text
-    final filteredOpportunities = _allOpportunities.where((opportunity) {
-      final matchesCategory = _selectedCategory == "All" || opportunity['category'] == _selectedCategory;
-      final matchesSearch = opportunity['title']!.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-          opportunity['organizer']!.toLowerCase().contains(_searchQuery.toLowerCase());
+    final filtered = _allOpportunities.where((o) {
+      final matchesCategory = _selectedCategory == 'All' || o['category'] == _selectedCategory;
+      final matchesSearch = o['title']!.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+          o['organizer']!.toLowerCase().contains(_searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     }).toList();
 
@@ -36,14 +54,23 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
         foregroundColor: Colors.white,
         elevation: 0,
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const PostOpportunityScreen()),
+        ),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.add),
+        label: const Text('Post'),
+      ),
       body: Column(
         children: [
-          // Search & Filter Box Header
           Container(
             color: Colors.deepPurple,
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: TextField(
-              onChanged: (value) => setState(() => _searchQuery = value),
+              onChanged: (v) => setState(() => _searchQuery = v),
               style: const TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 filled: true,
@@ -58,8 +85,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
               ),
             ),
           ),
-
-          // Categories horizontal scroll list
           SizedBox(
             height: 60,
             child: ListView.builder(
@@ -79,40 +104,30 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                       color: isSelected ? Colors.white : Colors.deepPurple,
                       fontWeight: FontWeight.bold,
                     ),
-                    onSelected: (bool selected) {
-                      setState(() {
-                        _selectedCategory = category;
-                      });
-                    },
+                    onSelected: (_) => setState(() => _selectedCategory = category),
                   ),
                 );
               },
             ),
           ),
-
-          // Dynamic Opportunities list
           Expanded(
-            child: filteredOpportunities.isEmpty
+            child: filtered.isEmpty
                 ? const Center(child: Text('No opportunities found.'))
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
-                    itemCount: filteredOpportunities.length,
+                    itemCount: filtered.length,
                     itemBuilder: (context, index) {
-                      final item = filteredOpportunities[index];
+                      final item = filtered[index];
                       return Card(
                         elevation: 3,
                         margin: const EdgeInsets.only(bottom: 12),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EventDetailsScreen(opportunity: item),
-                              ),
-                            );
-                          },
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => EventDetailsScreen(opportunity: item)),
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(16),
                             child: Column(
@@ -127,51 +142,32 @@ class _HomeFeedScreenState extends State<HomeFeedScreen> {
                                         color: Colors.deepPurple.withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      child: Text(
-                                        item['category']!,
-                                        style: const TextStyle(
-                                          color: Colors.deepPurple,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                      child: Text(item['category']!,
+                                          style: const TextStyle(
+                                              color: Colors.deepPurple, fontSize: 12, fontWeight: FontWeight.bold)),
                                     ),
-                                    Text(
-                                      item['date']!,
-                                      style: const TextStyle(color: Colors.grey, fontSize: 12),
-                                    ),
+                                    Text(item['date']!, style: const TextStyle(color: Colors.grey, fontSize: 12)),
                                   ],
                                 ),
                                 const SizedBox(height: 10),
-                                Text(
-                                  item['title']!,
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                ),
+                                Text(item['title']!,
+                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                                 const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.business, size: 16, color: Colors.grey),
-                                    const SizedBox(width: 6),
-                                    Text(
-                                      item['organizer']!,
-                                      style: const TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
+                                Row(children: [
+                                  const Icon(Icons.business, size: 16, color: Colors.grey),
+                                  const SizedBox(width: 6),
+                                  Text(item['organizer']!, style: const TextStyle(color: Colors.grey)),
+                                ]),
                                 const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.location_on, size: 16, color: Colors.grey),
-                                    const SizedBox(width: 6),
-                                    Expanded(
-                                      child: Text(
-                                        item['location']!,
+                                Row(children: [
+                                  const Icon(Icons.location_on, size: 16, color: Colors.grey),
+                                  const SizedBox(width: 6),
+                                  Expanded(
+                                    child: Text(item['location']!,
                                         style: const TextStyle(color: Colors.grey),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                        overflow: TextOverflow.ellipsis),
+                                  ),
+                                ]),
                               ],
                             ),
                           ),
