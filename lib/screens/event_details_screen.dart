@@ -212,20 +212,20 @@ class EventDetailsScreen extends StatelessWidget {
   void _confirmCancellation(BuildContext context, String eventId, String title) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: const Text('Cancel Registration'),
           content: Text('Are you sure you want to cancel your RSVP for "$title"? This action will delete your generated ticket.'),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(dialogContext),
               child: const Text('Keep Registration', style: TextStyle(color: Colors.grey)),
             ),
             TextButton(
               onPressed: () {
                 RsvpService.instance.cancelRsvp(eventId);
-                Navigator.pop(context);
+                Navigator.pop(dialogContext);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Registration cancelled successfully.'),

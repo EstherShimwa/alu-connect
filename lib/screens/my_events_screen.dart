@@ -120,45 +120,39 @@ class _MyEventsScreenState extends State<MyEventsScreen> with SingleTickerProvid
     
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-      scrollDirection: Axis.horizontal,
       itemCount: opportunities.length,
       itemBuilder: (context, index) {
         final item = opportunities[index];
         final regDetails = registrations[item['id']]!;
-        return Container(
-          width: MediaQuery.of(context).size.width * 0.85,
-          margin: const EdgeInsets.symmetric(horizontal: 10),
-          child: SingleChildScrollView(
-            child: Column(
+        return Column(
+          children: [
+            _buildPassTicketView(item, regDetails),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildPassTicketView(item, regDetails),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () => _showTicketBottomSheet(context, item, regDetails),
-                      icon: const Icon(Icons.fullscreen),
-                      label: const Text("Fullscreen Ticket"),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        foregroundColor: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    OutlinedButton.icon(
-                      onPressed: () => _confirmCancellation(context, item['id']!, item['title']!),
-                      icon: const Icon(Icons.cancel, color: Colors.red),
-                      label: const Text("Cancel RSVP", style: TextStyle(color: Colors.red)),
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Colors.red),
-                      ),
-                    ),
-                  ],
+                ElevatedButton.icon(
+                  onPressed: () => _showTicketBottomSheet(context, item, regDetails),
+                  icon: const Icon(Icons.fullscreen),
+                  label: const Text("Fullscreen Ticket"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                OutlinedButton.icon(
+                  onPressed: () => _confirmCancellation(context, item['id']!, item['title']!),
+                  icon: const Icon(Icons.cancel, color: Colors.red),
+                  label: const Text("Cancel RSVP", style: TextStyle(color: Colors.red)),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.red),
+                  ),
                 ),
               ],
             ),
-          ),
+            const SizedBox(height: 32),
+          ],
         );
       },
     );
@@ -329,21 +323,21 @@ class _MyEventsScreenState extends State<MyEventsScreen> with SingleTickerProvid
   void _confirmCancellation(BuildContext context, String eventId, String title) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: const Text('Cancel Registration'),
           content: Text('Are you sure you want to cancel your RSVP for "$title"? This action will remove your digital ticket.'),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(dialogContext),
               child: const Text('Keep Registration', style: TextStyle(color: Colors.grey)),
             ),
             TextButton(
               onPressed: () {
                 RsvpService.instance.cancelRsvp(eventId);
-                Navigator.pop(context);
-                ScaffoldMessenger.of(this.context).showSnackBar(
+                Navigator.pop(dialogContext);
+                ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Registration cancelled successfully.'),
                     backgroundColor: Colors.orange,

@@ -202,6 +202,12 @@ class _RsvpRegistrationScreenState extends State<RsvpRegistrationScreen> {
                 if (value == null || value.trim().isEmpty) {
                   return 'Please enter your full name';
                 }
+                if (value.trim().split(' ').length < 2) {
+                  return 'Please enter both first and last name';
+                }
+                if (RegExp(r'[0-9]').hasMatch(value)) {
+                  return 'Name should not contain numbers';
+                }
                 return null;
               },
             ),

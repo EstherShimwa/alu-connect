@@ -54,6 +54,7 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (index) {
+          setState(() => currentIndex = index);
           mainTabNotifier.value = index;
         },
         selectedItemColor: Colors.deepPurple,
