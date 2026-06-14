@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'screens/onboarding_screen.dart';
-import 'services/rsvp_service.dart';
-=======
 import 'services/rsvp_service.dart';
 import 'services/auth_service.dart';
 import 'services/post_service.dart';
->>>>>>> main
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
