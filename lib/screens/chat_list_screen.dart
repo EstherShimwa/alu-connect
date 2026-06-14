@@ -55,7 +55,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     "Club",
     "Academic",
     "Announcement",
-    "Program"
+    "Program",
   ];
 
   List<Map<String, dynamic>> get filteredRooms {
@@ -109,8 +109,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
             height: 50,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 final cat = categories[index];
@@ -130,8 +129,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     child: Text(
                       cat,
                       style: TextStyle(
-                        color:
-                            isSelected ? Colors.white : Colors.black,
+                        color: isSelected ? Colors.white : Colors.black,
                         fontSize: 13,
                       ),
                     ),
@@ -201,8 +199,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) =>
-                            ChatScreen(roomName: room["name"]),
+                        builder: (_) => ChatScreen(roomName: room["name"]),
                       ),
                     );
                   },

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'screens/onboarding_screen.dart';
 import 'services/rsvp_service.dart';
+=======
+import 'services/rsvp_service.dart';
+import 'services/auth_service.dart';
+import 'services/post_service.dart';
+>>>>>>> main
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await RsvpService.instance.init();
+  await AuthService.instance.init();
+  await PostService.instance.init();
   runApp(const TheALUConnect());
 }
 

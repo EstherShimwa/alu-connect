@@ -54,7 +54,13 @@ class NotificationsScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final notif = notifications[index];
           return Container(
+<<<<<<< HEAD
             color: notif["read"] ? Colors.white : Colors.deepPurple[50],
+=======
+            color: notif["read"]
+                ? Colors.white
+                : Colors.deepPurple[50],
+>>>>>>> main
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: Colors.deepPurple,
@@ -76,9 +82,13 @@ class NotificationsScreen extends StatelessWidget {
               trailing: Text(
                 notif["time"],
                 style: const TextStyle(
+<<<<<<< HEAD
                   color: Colors.grey,
                   fontSize: 11,
                 ),
+=======
+                    color: Colors.grey, fontSize: 11),
+>>>>>>> main
               ),
             ),
           );

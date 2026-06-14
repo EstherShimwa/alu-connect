@@ -1,30 +1,12 @@
 import 'package:flutter/material.dart';
+import 'home_feed_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final List<Map<String, String>> events = [
-    {"title": "AI Workshop", "type": "Workshop", "date": "12 June"},
-    {"title": "Startup Pitch Night", "type": "Entrepreneurship", "date": "15 June"},
-    {"title": "Hackathon 2026", "type": "Competition", "date": "20 June"},
-    {"title": "Leadership Bootcamp", "type": "Training", "date": "25 June"},
-  ];
-
-  List<bool> registered = [false, false, false, false];
-
-  void toggleRSVP(int index) {
-    setState(() {
-      registered[index] = !registered[index];
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return Scaffold(
       appBar: AppBar(
         title: const Text("The ALU Connect"),
@@ -90,5 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+=======
+    return const HomeFeedScreen();
+>>>>>>> main
   }
 }

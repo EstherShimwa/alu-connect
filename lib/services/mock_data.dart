@@ -1,0 +1,58 @@
+// lib/services/mock_data.dart
+
+final List<Map<String, String>> mockOpportunities = [
+  {
+    'id': '1',
+    'title': 'ALU Innovate Hackathon 2026',
+    'category': 'Hackathons',
+    'organizer': 'ALU Tech Society',
+    'date': 'June 25, 2026',
+    'location': 'Kigali Campus & Online',
+    'description': 'Collaborate with fellow ALU peers to build scalable solutions for real-world African challenges. Great prizes and mentorship opportunities await!',
+  },
+  {
+    'id': '2',
+    'title': 'Pan-African Business Club Meetup',
+    'category': 'Clubs',
+    'organizer': 'ALU Leadership & Business Club',
+    'date': 'June 18, 2026',
+    'location': 'Leadership Room (2nd Floor)',
+    'description': 'Network with fellow student entrepreneurs and discuss upcoming campus startup initiatives and project funding sources.',
+  },
+  {
+    'id': '3',
+    'title': 'Software Engineering Intern',
+    'category': 'Internships',
+    'organizer': 'Safaricom PLC',
+    'date': 'Apply by July 1, 2026',
+    'location': 'Remote / Nairobi',
+    'description': 'An exciting 3-month internship opportunity for ALU computing students to dive into enterprise cloud development.',
+  },
+  {
+    'id': '4',
+    'title': 'Design Thinking Masterclass',
+    'category': 'Workshops',
+    'organizer': 'ALU Student Life Team',
+    'date': 'June 22, 2026',
+    'location': 'Auditorium 1',
+    'description': 'Learn how to apply human-centered design frameworks to your school projects and entrepreneurial ventures.',
+  },
+  {
+    'id': '5',
+    'title': 'ALU Leadership Summit 2026',
+    'category': 'Workshops',
+    'organizer': 'ALU Student Council',
+    'date': 'June 30, 2026',
+    'location': 'Kigali Innovation Hub',
+    'description': 'An annual gathering of ALU student leaders and external partners discussing leadership strategies for Africa\'s growth.',
+  },
+  {
+    'id': '6',
+    'title': 'ALU Ventures Pitch Day',
+    'category': 'Clubs',
+    'organizer': 'ALU School of Business',
+    'date': 'July 5, 2026',
+    'location': 'Kigali Campus Sandbox',
+    'description': 'Pitch your startup ideas to local VC investors and win incubation funding of up to \$5,000.',
+  },
+];
